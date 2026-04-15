@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30. Geburtstag – Birthday Party</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Dancing+Script:wght@700&family=Bebas+Neue&family=Anton&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background-color: #e8dfd0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Leinwand-Textur ── */
+    .canvas-texture {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg,   transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+        repeating-linear-gradient(90deg,  transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+    }
+
+    /* ── Haupt-Karte ── */
+    .card {
+      position: relative;
+      width: min(520px, 96vw);
+      background: #ede5d6;
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 0 0 56px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+      z-index: 1;
+    }
+
+    /* ════════════════════════════════════
+       GIRLANDEN-BEREICH
+    ════════════════════════════════════ */
+    .garland-wrap {
+      position: relative;
+      height: 64px;
+      width: 100%;
+      overflow: visible;
+      z-index: 10;
+    }
+
+    /* Schnur */
+    .garland-wrap svg.string {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 64px;
+    }
+
+    /* einzelne Wimpel */
+    .bunting-flag {
+      position: absolute;
+      top: 8px;
+      width: 28px; height: 36px;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+    }
+
+    /* ════════════════════════════════════
+       DISCO-BÄLLE
+    ════════════════════════════════════ */
+    .disco {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%,
+        #fff 0%, #d0d0d0 18%, #909090 40%, #505050 65%, #2a2a2a 100%);
+      box-shadow:
+        inset -6px -6px 18px rgba(0,0,0,.5),
+        inset  4px  4px 12px rgba(255,255,255,.4),
+        0 6px 24px rgba(0,0,0,.45);
+      overflow: hidden;
+    }
+    /* Spiegel-Kacheln via repeating-linear-gradient */
+    .disco::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background:
+        repeating-linear-gradient(0deg,   transparent 0px, transparent 7px, rgba(255,255,255,.12) 7px, rgba(255,255,255,.12) 8px),
+        repeating-linear-gradient(90deg,  transparent 0px, transparent 7px, rgba(255,255,255,.12) 7px, rgba(255,255,255,.12) 8px);
+    }
+
+    .disco-tl { width: 100px; height: 100px; top: 20px; left: -18px; }
+    .disco-tr { width: 120px; height: 120px; top: 10px; right: -22px; }
+    .disco-br { width:  80px; height:  80px; bottom: 80px; right: -14px; }
+
+    /* ════════════════════════════════════
+       DEKORATIVE ELEMENTE
+    ════════════════════════════════════ */
+    .deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Sterne */
+    .star {
+      position: absolute;
+      font-size: 28px;
+      color: #e91e8c;
+      filter: drop-shadow(0 2px 4px rgba(233,30,140,.5));
+      pointer-events: none;
+    }
+    .star.silver { color: #aaa; filter: drop-shadow(0 2px 4px rgba(180,180,180,.6)); }
+    .star.sm { font-size: 18px; }
+    .star.lg { font-size: 38px; }
+
+    /* ════════════════════════════════════
+       FOTO-PLATZHALTER
+    ════════════════════════════════════ */
+    .photo-wrap {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: center;
+      margin-top: -16px;
+      padding: 0 24px;
+    }
+
+    .photo-container {
+      position: relative;
+      width: 280px;
+      height: 320px;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #3d3d3d 50%, #111 100%);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-family: 'Dancing Script', cursive;
+      font-size: 18px;
+      text-align: center;
+      filter: grayscale(1);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+      padding: 16px;
+    }
+    .photo-placeholder svg { opacity: .4; margin-bottom: 10px; }
+
+    /* Hat über dem Foto */
+    .party-hat {
+      position: absolute;
+      top: -54px;
+      left: 50%;
+      transform: translateX(-40%) rotate(-8deg);
+      font-size: 90px;
+      filter: drop-shadow(2px 2px 4px rgba(0,0,0,.3));
+      z-index: 6;
+    }
+
+    /* ════════════════════════════════════
+       "30" – grosse Zahl
+    ════════════════════════════════════ */
+    .big-number {
+      position: relative;
+      z-index: 6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      margin-top: -24px;
+    }
+
+    .big-number span {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(100px, 28vw, 160px);
+      line-height: 1;
+      background: linear-gradient(135deg,
+        #ff69b4 0%, #ff1493 20%, #ffb6c1 40%,
+        #ff1493 55%, #c2185b 70%, #ff69b4 85%, #fff0f5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 3px 0 #c2185b) drop-shadow(0 0 18px rgba(255,20,147,.4));
+      letter-spacing: -4px;
+    }
+
+    /* Kerzen über der Zahl */
+    .candles {
+      position: absolute;
+      top: -28px;
+      display: flex;
+      gap: 40px;
+      font-size: 32px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+    }
+
+    /* ════════════════════════════════════
+       RANSOM-NOTE TEXT "BiRtHdAy PaRtY"
+    ════════════════════════════════════ */
+    .ransom {
+      position: relative;
+      z-index: 6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 3px;
+      padding: 0 16px;
+      margin-top: -8px;
+    }
+
+    .ransom span {
+      display: inline-block;
+      font-family: 'Bebas Neue', 'Anton', sans-serif;
+      font-size: clamp(22px, 6vw, 36px);
+      font-weight: 900;
+      padding: 3px 5px 1px;
+      border-radius: 3px;
+      line-height: 1;
+      box-shadow: 1px 1px 3px rgba(0,0,0,.25);
+    }
+
+    /* Buchstaben-Farben im Ransom-Stil */
+    .r-B  { background:#e91e8c; color:#fff; transform:rotate(-2deg); }
+    .r-i  { background:#fff176; color:#333; transform:rotate(3deg); font-size:80%; }
+    .r-r  { background:#42a5f5; color:#fff; transform:rotate(-1deg); }
+    .r-t  { background:#fff; color:#e91e8c; border:2px solid #e91e8c; transform:rotate(2deg); }
+    .r-h  { background:#66bb6a; color:#fff; transform:rotate(-3deg); }
+    .r-D  { background:#ab47bc; color:#fff; transform:rotate(1deg); }
+    .r-a  { background:#ff7043; color:#fff; transform:rotate(-2deg); }
+    .r-y  { background:#fff; color:#333; transform:rotate(3deg); }
+    .r-sp { width: 12px; }
+    .r-P  { background:#e91e8c; color:#fff; transform:rotate(-1deg); }
+    .r-A  { background:#fff176; color:#333; transform:rotate(2deg); font-size:80%; }
+    .r-R  { background:#42a5f5; color:#fff; transform:rotate(-3deg); }
+    .r-T  { background:#66bb6a; color:#fff; transform:rotate(1deg); }
+    .r-Y2 { background:#ab47bc; color:#fff; transform:rotate(-2deg); }
+
+    /* ════════════════════════════════════
+       INFO-BLOCK (Datum / Ort)
+    ════════════════════════════════════ */
+    .info {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      margin-top: 20px;
+      padding: 0 24px;
+    }
+
+    .info-date {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 4.5vw, 26px);
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 1px;
+    }
+
+    .info-divider {
+      display: inline-block;
+      margin: 0 10px;
+      color: #999;
+    }
+
+    .info-location {
+      margin-top: 6px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(13px, 3vw, 16px);
+      color: #444;
+      letter-spacing: .5px;
+    }
+
+    .info-location::before {
+      content: '📍 ';
+    }
+
+    /* ════════════════════════════════════
+       COCKTAIL (SVG inline)
+    ════════════════════════════════════ */
+    .cocktail {
+      position: absolute;
+      left: 8px;
+      top: 210px;
+      z-index: 7;
+      width: 80px;
+      filter: drop-shadow(2px 4px 6px rgba(0,0,0,.2));
+    }
+
+    /* ════════════════════════════════════
+       CUPCAKE (SVG inline)
+    ════════════════════════════════════ */
+    .cupcake {
+      position: absolute;
+      right: 6px;
+      top: 230px;
+      z-index: 7;
+      width: 80px;
+      filter: drop-shadow(2px 4px 6px rgba(0,0,0,.2));
+    }
+
+    /* ════════════════════════════════════
+       BALLONS
+    ════════════════════════════════════ */
+    .balloon-group {
+      position: absolute;
+      top: 16px;
+      right: 90px;
+      z-index: 8;
+      display: flex;
+      gap: -8px;
+    }
+    .balloon {
+      position: relative;
+      font-size: 42px;
+      filter: drop-shadow(1px 3px 4px rgba(0,0,0,.25));
+      transform-origin: bottom center;
+      animation: sway 4s ease-in-out infinite alternate;
+    }
+    .balloon:nth-child(2) { animation-delay: .6s; font-size: 36px; transform: translateY(6px); }
+    .balloon:nth-child(3) { animation-delay: 1.2s; font-size: 44px; transform: translateY(-4px); }
+
+    @keyframes sway {
+      from { transform: rotate(-4deg); }
+      to   { transform: rotate(4deg); }
+    }
+
+    /* ════════════════════════════════════
+       GLITTER-ANIMATION auf "30"
+    ════════════════════════════════════ */
+    .big-number span {
+      animation: shimmer 3s linear infinite;
+      background-size: 200% 100%;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* ════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════ */
+    @media (max-width: 400px) {
+      .disco-tl { width: 75px; height: 75px; }
+      .disco-tr { width: 90px; height: 90px; }
+      .cocktail { width: 60px; top: 230px; left: 2px; }
+      .cupcake  { width: 60px; top: 250px; right: 2px; }
+      .party-hat { font-size: 68px; top: -42px; }
+    }
+
+    /* Funkel-Sterne die animiert erscheinen */
+    .sparkle {
+      position: absolute;
+      color: #ffd700;
+      font-size: 20px;
+      animation: twinkle 2s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: .2; transform: scale(.8); }
+      50%      { opacity: 1;  transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+<div class="canvas-texture"></div>
+
+<div class="card">
+
+  <!-- ══ DISCO-BÄLLE ══ -->
+  <div class="disco disco-tl"></div>
+  <div class="disco disco-tr"></div>
+  <div class="disco disco-br"></div>
+
+  <!-- ══ GIRLANDE ══ -->
+  <div class="garland-wrap">
+    <!-- Schnur SVG -->
+    <svg class="string" viewBox="0 0 520 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,12 Q65,42 130,12 Q195,42 260,12 Q325,42 390,12 Q455,42 520,12"
+            stroke="#b0a090" stroke-width="2" fill="none"/>
+    </svg>
+
+    <!-- Wimpel – abwechselnde Farben -->
+    <div class="bunting-flag" style="left:6%;  background:#e91e8c; transform:rotate(-4deg)"></div>
+    <div class="bunting-flag" style="left:15%; background:#fff176; transform:rotate(2deg)"></div>
+    <div class="bunting-flag" style="left:24%; background:#42a5f5; transform:rotate(-3deg)"></div>
+    <div class="bunting-flag" style="left:33%; background:#66bb6a; transform:rotate(3deg)"></div>
+    <div class="bunting-flag" style="left:42%; background:#e91e8c; transform:rotate(-2deg)"></div>
+    <div class="bunting-flag" style="left:51%; background:#ab47bc; transform:rotate(2deg)"></div>
+    <div class="bunting-flag" style="left:60%; background:#ff7043; transform:rotate(-3deg)"></div>
+    <div class="bunting-flag" style="left:69%; background:#e91e8c; transform:rotate(1deg)"></div>
+    <div class="bunting-flag" style="left:78%; background:#fff176; transform:rotate(-2deg)"></div>
+    <div class="bunting-flag" style="left:87%; background:#42a5f5; transform:rotate(3deg)"></div>
+  </div>
+
+  <!-- ══ BALLONS ══ -->
+  <div class="balloon-group">
+    <div class="balloon">🎈</div>
+    <div class="balloon">🩷</div>
+    <div class="balloon">🎈</div>
+  </div>
+
+  <!-- ══ STERNE ══ -->
+  <div class="star lg"  style="top:80px;  left:14px">★</div>
+  <div class="star sm"  style="top:130px; left:26px">★</div>
+  <div class="star silver lg" style="top:54px;  right:130px">★</div>
+  <div class="star sm"  style="bottom:160px; left:18px">★</div>
+  <div class="star"     style="bottom:120px; right:90px">★</div>
+  <div class="star silver sm" style="bottom:90px; left:90px">★</div>
+
+  <!-- Glitzer-Funkel -->
+  <div class="sparkle" style="top:155px; left:88px; animation-delay:.3s">✦</div>
+  <div class="sparkle" style="top:175px; right:84px; animation-delay:.9s">✦</div>
+  <div class="sparkle" style="bottom:140px; left:50px; animation-delay:1.5s">✦</div>
+  <div class="sparkle" style="top:95px; left:54px; animation-delay:.6s; color:#e91e8c">✦</div>
+
+  <!-- ══ COCKTAIL ══ -->
+  <svg class="cocktail" viewBox="0 0 80 110" xmlns="http://www.w3.org/2000/svg">
+    <!-- Glas -->
+    <polygon points="14,14 66,14 44,68 36,68" fill="rgba(255,182,193,0.55)" stroke="#e91e8c" stroke-width="2"/>
+    <!-- Stiel -->
+    <line x1="40" y1="68" x2="40" y2="92" stroke="#e91e8c" stroke-width="2.5"/>
+    <!-- Fuss -->
+    <line x1="26" y1="92" x2="54" y2="92" stroke="#e91e8c" stroke-width="2.5"/>
+    <!-- Flüssigkeit Füllung -->
+    <polygon points="17,20 63,20 56,52 24,52" fill="rgba(255,105,180,0.7)"/>
+    <!-- Schirmchen -->
+    <line x1="40" y1="10" x2="58" y2="26" stroke="#ff69b4" stroke-width="1.5"/>
+    <ellipse cx="49" cy="17" rx="14" ry="7" fill="#ff69b4" opacity=".8" transform="rotate(-30,49,17)"/>
+    <!-- Orangenscheibe -->
+    <circle cx="62" cy="18" r="9" fill="#ffa040" stroke="#ff7700" stroke-width="1.5"/>
+    <line x1="62" y1="9"  x2="62" y2="27" stroke="#ff7700" stroke-width="1"/>
+    <line x1="53" y1="18" x2="71" y2="18" stroke="#ff7700" stroke-width="1"/>
+  </svg>
+
+  <!-- ══ CUPCAKE ══ -->
+  <svg class="cupcake" viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Kerze -->
+    <rect x="36" y="2" width="8" height="22" rx="3" fill="#fffde7" stroke="#ffd54f" stroke-width="1"/>
+    <!-- Flamme -->
+    <ellipse cx="40" cy="2" rx="4" ry="6" fill="#ffb300"/>
+    <ellipse cx="40" cy="3" rx="2" ry="4" fill="#fff176"/>
+    <!-- Creme -->
+    <path d="M16,44 Q28,18 40,28 Q52,18 64,44 Z" fill="#ffb6c1"/>
+    <path d="M22,44 Q30,26 40,33 Q50,26 58,44 Z" fill="#ff8fab"/>
+    <path d="M28,44 Q34,30 40,36 Q46,30 52,44 Z" fill="#ffb6c1"/>
+    <!-- Becher -->
+    <path d="M14,44 L18,78 Q18,82 22,82 L58,82 Q62,82 62,78 L66,44 Z" fill="#e91e8c"/>
+    <!-- Streifen am Becher -->
+    <path d="M22,46 L24,80" stroke="#c2185b" stroke-width="3" opacity=".5"/>
+    <path d="M36,44 L36,82" stroke="#c2185b" stroke-width="3" opacity=".5"/>
+    <path d="M50,46 L48,80" stroke="#c2185b" stroke-width="3" opacity=".5"/>
+    <!-- Zuckerperlen -->
+    <circle cx="30" cy="36" r="3" fill="#fff176"/>
+    <circle cx="40" cy="30" r="3" fill="#42a5f5"/>
+    <circle cx="50" cy="36" r="3" fill="#fff176"/>
+  </svg>
+
+  <!-- ══ FOTO ══ -->
+  <div class="photo-wrap">
+    <div class="photo-container">
+
+      <div class="party-hat">🎉</div>
+
+      <div class="photo-placeholder">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="24" r="12" stroke="#aaa" stroke-width="2"/>
+          <path d="M8,56 C8,42 56,42 56,56" stroke="#aaa" stroke-width="2" fill="none"/>
+        </svg>
+        Dein Foto<br/>hier einfügen
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GROSSE "30" ══ -->
+  <div class="big-number">
+    <div class="candles">🕯️&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🕯️</div>
+    <span>30</span>
+  </div>
+
+  <!-- ══ RANSOM-NOTE TEXT ══ -->
+  <div class="ransom">
+    <span class="r-B">B</span><span class="r-i">i</span><span class="r-r">r</span><span class="r-t">t</span><span class="r-h">h</span><span class="r-D">D</span><span class="r-a">a</span><span class="r-y">y</span>
+    <span class="r-sp"></span>
+    <span class="r-P">P</span><span class="r-A">A</span><span class="r-R">R</span><span class="r-T">T</span><span class="r-Y2">Y</span>
+  </div>
+
+  <!-- ══ INFO ══ -->
+  <div class="info">
+    <div class="info-date">
+      21. Juni 2026 <span class="info-divider">|</span> 19:30 Uhr
+    </div>
+    <div class="info-location">
+      Musterrestaurant, Musterstadt
+    </div>
+  </div>
+
+</div><!-- .card -->
+</body>
+</html>
