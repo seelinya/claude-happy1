@@ -3,8 +3,8 @@
   "use strict";
 
   // Platzhalter — bitte mit echten Daten ersetzen:
-  const EMAIL = "hallo@schuetzenhaus-event.ch";
-  const WHATSAPP = "41790000000"; // internationale Nummer ohne + und ohne Leerzeichen
+  const EMAIL = "info@schuetzenhaus-eventraum.ch";
+  const WHATSAPP = "41792501954"; // internationale Nummer ohne + und ohne Leerzeichen
 
   const form = document.getElementById("anfrageForm");
   if (!form) return;
