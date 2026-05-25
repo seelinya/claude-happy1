@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speise- &amp; Getränkekarte — Schützenhaus Event Room</title>
+  <meta name="description" content="Unsere Menüs, Apéros, vegetarische und vegane Optionen sowie Getränke und Weine fürs Event-Catering im Schützenhaus." />
+  <!-- HINWEIS: Preise und Gerichte sind Beispiele/Platzhalter. Die offizielle Karte kann als PDF hinterlegt werden (siehe Button unten). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <header class="nav scrolled" id="top">
+    <a class="brand" href="index.html" aria-label="Schützenhaus Event Room — Startseite">
+      <b>SCHÜTZENHAUS</b><span>Event Room</span>
+    </a>
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      <a href="index.html#pakete">Pakete</a>
+      <a href="index.html#location">Location</a>
+      <a href="index.html#ueber-uns">Über uns</a>
+      <a href="index.html#kontakt">Kontakt</a>
+      <a class="btn btn--primary nav-cta" href="anfrage.html">Jetzt anfragen</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <section class="section page-top">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Aus unserer Küche</span>
+        <h1 class="display-l">Speise- &amp; Getränkekarte.</h1>
+        <p class="lead">Eine Auswahl, was wir für dein Event auf den Teller und ins Glas bringen. Alles frisch, alles selbst gekocht — und individuell anpassbar. <span style="color:var(--ember-deep);font-weight:600;">vege</span> = vegetarisch, <span style="color:var(--ember-deep);font-weight:600;">vegan</span> = vegan.</p>
+        <p style="margin-top:14px;">
+          <!-- Lege hier die echte Karte als PDF ab, z. B. assets/speisekarte.pdf, und aktiviere den Link. -->
+          <a class="btn btn--dark" href="#" onclick="alert('Die druckbare PDF-Karte wird hier hinterlegt. Bis dahin: einfach in der Anfrage notieren oder persönlich besprechen.'); return false;">📄 Karte als PDF (folgt)</a>
+        </p>
+      </div>
+
+      <!-- APÉRO -->
+      <div class="menu-section">
+        <span class="eyebrow">Zum Ankommen</span>
+        <h3>Apéro &amp; Häppchen</h3>
+        <div class="menu-cols">
+          <div class="menu-item"><div><span class="m-name">Apéro Tal<span class="badge-diet badge-veg">vege</span></span><span class="m-desc">Hausgemachte Gebäckstangen, Oliven, Trockenfleisch, Bergkäse</span></div><span class="m-price">14.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Flying Häppchen</span><span class="m-desc">Bunte Auswahl warmer &amp; kalter Bissen, serviert am Platz</span></div><span class="m-price">18.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Suppentopf vom Feuer<span class="badge-diet badge-vegan">vegan</span></span><span class="m-desc">Kürbis-Ingwer mit geröstetem Kernöl</span></div><span class="m-price">9.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Brot &amp; Aufstriche<span class="badge-diet badge-veg">vege</span></span><span class="m-desc">Frisches Hausbrot, Kräuterquark, Hummus, Butter</span></div><span class="m-price">8.–</span></div>
+        </div>
+      </div>
+
+      <!-- MENÜ 1 -->
+      <div class="menu-section">
+        <span class="eyebrow">Menü 1</span>
+        <h3>Klassiker vom Tal</h3>
+        <div class="menu-cols">
+          <div class="menu-item"><div><span class="m-name">Vorspeise</span><span class="m-desc">Bunter Blattsalat, geröstete Kerne, Apfel-Senf-Dressing</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Hauptgang</span><span class="m-desc">Geschmortes Rind, Kartoffelstock, Marktgemüse</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Vegi-Variante<span class="badge-diet badge-veg">vege</span></span><span class="m-desc">Pilz-Risotto mit Bergkäse &amp; Kräutern</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Dessert</span><span class="m-desc">Warmer Apfelstrudel, Vanillesauce</span></div></div>
+        </div>
+        <div class="menu-item" style="border-bottom:0;"><span class="m-name">Ab</span><span class="m-price">52.– / Person</span></div>
+      </div>
+
+      <!-- MENÜ 2 -->
+      <div class="menu-section">
+        <span class="eyebrow">Menü 2</span>
+        <h3>Festlich &amp; mehrgängig</h3>
+        <div class="menu-cols">
+          <div class="menu-item"><div><span class="m-name">Gruss aus der Küche</span><span class="m-desc">Kleiner Überraschungsbissen des Tages</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Vorspeise</span><span class="m-desc">Hausgebeizter Lachs oder Randen-Carpaccio <span class="badge-diet badge-vegan">vegan</span></span></div></div>
+          <div class="menu-item"><div><span class="m-name">Zwischengang</span><span class="m-desc">Kürbisschaumsüppchen mit Trüffelöl</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Hauptgang</span><span class="m-desc">Kalbsrücken, Gratin, Saisongemüse — oder Wildvariante</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Dessert</span><span class="m-desc">Schokoladenkuchen mit flüssigem Kern, Beeren</span></div></div>
+        </div>
+        <div class="menu-item" style="border-bottom:0;"><span class="m-name">Ab</span><span class="m-price">78.– / Person</span></div>
+      </div>
+
+      <!-- MENÜ 3 -->
+      <div class="menu-section">
+        <span class="eyebrow">Menü 3</span>
+        <h3>Apéro riche / Flying Buffet</h3>
+        <div class="menu-cols">
+          <div class="menu-item"><div><span class="m-name">Warme &amp; kalte Stationen</span><span class="m-desc">Grilladen, Curries, Salate, Käse &amp; Charcuterie</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Vegi- &amp; Vegan-Station<span class="badge-diet badge-vegan">vegan</span></span><span class="m-desc">Bowls, gegrilltes Gemüse, Dips &amp; Falafel</span></div></div>
+          <div class="menu-item"><div><span class="m-name">Süsse Ecke</span><span class="m-desc">Mini-Desserts, Früchte, Kaffee &amp; Tee</span></div></div>
+        </div>
+        <div class="menu-item" style="border-bottom:0;"><span class="m-name">Ab</span><span class="m-price">64.– / Person</span></div>
+      </div>
+
+      <!-- GETRÄNKE -->
+      <div class="menu-section">
+        <span class="eyebrow">Aus dem Keller &amp; von der Bar</span>
+        <h3>Getränke &amp; Weine</h3>
+        <div class="menu-cols">
+          <div class="menu-item"><div><span class="m-name">Getränkepauschale</span><span class="m-desc">Bier, offener Wein, Softdrinks, Wasser, Kaffee — pro Person/Std.</span></div><span class="m-price">9.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Hauswein weiss</span><span class="m-desc">Frisch &amp; mineralisch, passt zu Apéro &amp; Fisch (7.5 dl)</span></div><span class="m-price">38.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Hauswein rot</span><span class="m-desc">Kräftig &amp; samtig, ideal zu Fleischgängen (7.5 dl)</span></div><span class="m-price">42.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Schaumwein / Prosecco</span><span class="m-desc">Zum Anstossen &amp; für den Empfang</span></div><span class="m-price">à 9.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Alkoholfrei &amp; hausgemacht</span><span class="m-desc">Sirup-Spritz, Eistee, Most aus der Region</span></div><span class="m-price">à 5.–</span></div>
+          <div class="menu-item"><div><span class="m-name">Weinbegleitung</span><span class="m-desc">Wir empfehlen dir den passenden Wein zu jedem Gang — sprich uns an.</span></div><span class="m-price">auf Anfrage</span></div>
+        </div>
+      </div>
+
+      <div class="about-card" style="background:var(--ink);color:var(--cream);">
+        <h3 style="font-size:1.8rem;margin-bottom:10px;">Nichts Passendes dabei?</h3>
+        <p style="opacity:.88;">Kein Problem — alle Menüs sind nur der Anfang. Wir kochen vegetarisch, vegan, allergikerfreundlich oder ganz nach deinem Wunsch. Erzähl uns, worauf du Lust hast.</p>
+        <div class="contact-btns">
+          <a class="btn btn--primary" href="anfrage.html">Menü in der Anfrage wählen</a>
+          <a class="btn btn--ghost" href="index.html#kontakt">Persönlich besprechen</a>
+        </div>
+        <p class="form-note" style="color:rgba(247,241,230,.6);margin-top:14px;">Alle Preise in CHF, Beispielangaben. Verbindliche Preise gibt's im persönlichen Angebot.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom" style="border:0;padding-top:0;">
+        <span>© <span data-year>2026</span> Schützenhaus Event Room · Mustertal</span>
+        <span><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
