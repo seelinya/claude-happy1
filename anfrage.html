@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event anfragen — Schützenhaus Event Room</title>
+  <meta name="description" content="Stell deine unverbindliche Event-Anfrage: Paket wählen, Ausstattung, Daten, Verpflegung und Getränke. Wir bauen dir ein Angebot." />
+  <!-- Anfrageformular: Versand via mailto/WhatsApp, konfiguriert in assets/js/anfrage.js. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <header class="nav scrolled" id="top">
+    <a class="brand" href="index.html" aria-label="Schützenhaus Event Room — Startseite">
+      <b>SCHÜTZENHAUS</b><span>Event Room</span>
+    </a>
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      <a href="index.html#pakete">Pakete</a>
+      <a href="index.html#location">Location</a>
+      <a href="index.html#ueber-uns">Über uns</a>
+      <a href="speisekarte.html">Speisekarte</a>
+      <a href="index.html#kontakt">Kontakt</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <section class="section page-top">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Event anfragen</span>
+        <h1 class="display-l">Erzähl uns von deinem Fest.</h1>
+        <p class="lead">Füll aus, was du schon weisst — der Rest klärt sich im Gespräch. Unverbindlich, unkompliziert, schnelle Antwort.</p>
+      </div>
+
+      <div class="form-wrap">
+        <form class="form-card" id="anfrageForm" novalidate>
+
+          <!-- 1 · PAKET -->
+          <fieldset class="fieldset">
+            <legend><span class="step">1</span> Dein Paket</legend>
+            <div class="pkg-choice">
+              <label>
+                <input type="radio" name="paket" value="Rundum sorglos (Location + Catering komplett)" required />
+                <span class="pkg-choice__body"><b>Rundum sorglos</b><span>Location + komplettes Catering aus unserer Küche.</span></span>
+              </label>
+              <label>
+                <input type="radio" name="paket" value="Teils, teils (Location + Teil-Catering)" />
+                <span class="pkg-choice__body"><b>Teils, teils</b><span>Location + ein Teil des Caterings von uns, den Rest machst du selbst.</span></span>
+              </label>
+              <label>
+                <input type="radio" name="paket" value="Freie Hand (nur Location)" />
+                <span class="pkg-choice__body"><b>Freie Hand</b><span>Nur die Location — Catering organisierst du selbst.</span></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 2 · EVENT -->
+          <fieldset class="fieldset">
+            <legend><span class="step">2</span> Dein Event</legend>
+            <div class="field">
+              <label for="eventtyp">Um was für ein Event geht's?</label>
+              <select id="eventtyp">
+                <option value="">Bitte wählen …</option>
+                <option>Hochzeit</option>
+                <option>Geburtstag / Jubiläum</option>
+                <option>Firmenanlass / Meeting</option>
+                <option>Konzert / Bühnenshow</option>
+                <option>Vereinsfest</option>
+                <option>Apéro / Generalversammlung</option>
+                <option>Trauerfeier / Abdankung</option>
+                <option>Anderes</option>
+              </select>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="datum_von">Datum von <span class="req">*</span></label>
+                <input type="date" id="datum_von" required />
+              </div>
+              <div class="field">
+                <label for="datum_bis">Datum bis <span class="hint">(bei mehrtägig)</span></label>
+                <input type="date" id="datum_bis" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="gaeste">Anzahl Gäste (ungefähr)</label>
+              <input type="number" id="gaeste" min="1" max="200" placeholder="z. B. 80" />
+            </div>
+          </fieldset>
+
+          <!-- 3 · AUSSTATTUNG -->
+          <fieldset class="fieldset">
+            <legend><span class="step">3</span> Ausstattung</legend>
+            <div class="grid-2">
+              <div class="field">
+                <label for="eq_stuehle">Stühle <span class="hint">(max. 110)</span></label>
+                <input type="number" id="eq_stuehle" min="0" max="110" placeholder="0" />
+              </div>
+              <div class="field">
+                <label for="eq_tische">Grosse Tische <span class="hint">(max. 25)</span></label>
+                <input type="number" id="eq_tische" min="0" max="25" placeholder="0" />
+              </div>
+              <div class="field">
+                <label for="eq_stehtische">Stehtische <span class="hint">(max. 15)</span></label>
+                <input type="number" id="eq_stehtische" min="0" max="15" placeholder="0" />
+              </div>
+              <div class="field">
+                <label for="eq_festbaenke">Festbänke draussen <span class="hint">(max. 20)</span></label>
+                <input type="number" id="eq_festbaenke" min="0" max="20" placeholder="0" />
+              </div>
+            </div>
+            <div class="field">
+              <span class="label">Technik &amp; Extras</span>
+              <div class="check-grid" id="equipmentGrid">
+                <label class="check"><input type="checkbox" name="equipment" value="Bühne" /> Bühne</label>
+                <label class="check"><input type="checkbox" name="equipment" value="Bühnenlicht" /> Bühnenlicht</label>
+                <label class="check"><input type="checkbox" name="equipment" value="Soundanlage / PA" /> Soundanlage / PA</label>
+                <label class="check"><input type="checkbox" name="equipment" value="Mikrofon" /> Mikrofon</label>
+                <label class="check"><input type="checkbox" name="equipment" value="Beamer & Leinwand" /> Beamer &amp; Leinwand</label>
+                <label class="check"><input type="checkbox" name="equipment" value="Bar / Tresen" /> Bar / Tresen</label>
+                <label class="check"><input type="checkbox" name="equipment" value="Tanzfläche" /> Tanzfläche</label>
+                <label class="check"><input type="checkbox" name="equipment" value="WLAN" /> WLAN</label>
+                <label class="check"><input type="checkbox" name="equipment" value="Feuerstelle & Lounge (draussen)" /> Feuerstelle &amp; Lounge</label>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 4 · VERPFLEGUNG (nur bei Catering) -->
+          <fieldset class="fieldset catering-block" id="cateringBlock">
+            <legend><span class="step">4</span> Verpflegung</legend>
+            <p class="form-note" style="margin-top:0;margin-bottom:18px;">Wirf vorab einen Blick in unsere <a href="speisekarte.html" style="color:var(--ember-deep);font-weight:600;">Speise- &amp; Getränkekarte</a>. Du kannst hier wählen oder alles persönlich mit uns besprechen.</p>
+            <div class="grid-3">
+              <div class="field">
+                <label for="veg">Davon vegetarisch</label>
+                <input type="number" id="veg" min="0" placeholder="0" />
+              </div>
+              <div class="field">
+                <label for="vegan">Davon vegan</label>
+                <input type="number" id="vegan" min="0" placeholder="0" />
+              </div>
+              <div class="field">
+                <label for="allergien">Allergien / Sonstiges</label>
+                <input type="text" id="allergien" placeholder="z. B. glutenfrei" />
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="menue">Menüwunsch</label>
+                <select id="menue">
+                  <option value="">Bitte wählen …</option>
+                  <option>Menü 1 — Klassiker vom Tal</option>
+                  <option>Menü 2 — Festlich &amp; mehrgängig</option>
+                  <option>Menü 3 — Apéro riche / Flying Buffet</option>
+                  <option>Vegetarisches / veganes Menü</option>
+                  <option>Persönlich besprechen</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="getraenke">Getränke &amp; Wein</label>
+                <select id="getraenke">
+                  <option value="">Bitte wählen …</option>
+                  <option>Eure Weinempfehlung passend zum Menü</option>
+                  <option>Getränkepauschale (Bier, Wein, Softdrinks)</option>
+                  <option>Nur alkoholfrei</option>
+                  <option>Persönlich besprechen</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 5 · KONTAKT -->
+          <fieldset class="fieldset">
+            <legend><span class="step">5</span> Deine Kontaktdaten</legend>
+            <div class="grid-2">
+              <div class="field">
+                <label for="kontakt_name">Name <span class="req">*</span></label>
+                <input type="text" id="kontakt_name" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="kontakt_tel">Telefon</label>
+                <input type="tel" id="kontakt_tel" autocomplete="tel" placeholder="+41 …" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="kontakt_email">E-Mail <span class="req">*</span></label>
+              <input type="email" id="kontakt_email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="kommentar">Deine Nachricht / Wünsche</label>
+              <textarea id="kommentar" placeholder="Erzähl uns von deiner Idee, Fragen zur Speisekarte, Wünsche zur Deko …"></textarea>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn--primary btn--lg" id="sendEmail">Anfrage per E-Mail senden</button>
+            <button type="button" class="btn btn--whatsapp btn--lg" id="sendWhatsApp">Per WhatsApp senden</button>
+          </div>
+          <p class="form-note">Beide Wege öffnen eine fertig vorbereitete Nachricht mit deinen Angaben — du musst sie nur noch abschicken. Unverbindlich &amp; kostenlos.</p>
+        </form>
+
+        <aside class="form-aside">
+          <h4>So läuft's ab</h4>
+          <ul>
+            <li>Du schickst deine Anfrage ab.</li>
+            <li>Wir melden uns innert 1–2 Tagen.</li>
+            <li>Gemeinsam feilen wir an den Details.</li>
+            <li>Du bekommst ein klares Angebot.</li>
+          </ul>
+          <p class="small">📅 <strong>Wochenenden mind. ein halbes Jahr im Voraus</strong> anfragen — sie sind schnell weg.</p>
+          <p class="small">Lieber direkt? <a href="https://wa.me/41792501954" target="_blank" rel="noopener" style="color:var(--ember);">WhatsApp</a> oder <a href="mailto:info@schuetzenhaus-eventraum.ch" style="color:var(--ember);">E-Mail</a>.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom" style="border:0;padding-top:0;">
+        <span>© <span data-year>2026</span> Schützenhaus Event Room · Schwyz</span>
+        <span><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/anfrage.js"></script>
+</body>
+</html>
